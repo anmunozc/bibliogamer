@@ -181,11 +181,11 @@ try:
 except Exception:
     ventana.configure(bg=label_bg_color)
 
-# Título principal con fuente Pixelify Sans
+# Título principal con fuente Arial
 titulo_principal = tk.Label(
     ventana,
     text="Biblioteca de Videojuegos",
-    font=("Pixelify Sans", 22, "bold"),
+    font=("Arial", 22, "bold"),
     bg=label_bg_color,
     fg="#2a2a2a"
 )
@@ -208,18 +208,20 @@ tk.Label(ventana, text="Plataforma:", bg=label_bg_color).place(x=30, y=190)
 plataforma_entry = tk.Entry(ventana)
 plataforma_entry.place(x=130, y=190)
 
-# Frame para botones centrados horizontalmente
-botones_frame = tk.Frame(ventana, bg=label_bg_color)
-botones_frame.place(x=0, y=230, relwidth=1)
+# Botones directamente sobre la ventana sin frame de fondo
+btn_agregar = tk.Button(ventana, text="Agregar", command=agregar_videojuego,
+                        bg="green", fg="white", width=13, font=('Arial', 10, 'bold'), bd=0, highlightthickness=0)
+btn_actualizar = tk.Button(ventana, text="Actualizar", command=actualizar_videojuego,
+                           bg="blue", fg="white", width=13, font=('Arial', 10, 'bold'), bd=0, highlightthickness=0)
+btn_eliminar = tk.Button(ventana, text="Eliminar", command=eliminar_videojuego,
+                         bg="red", fg="white", width=13, font=('Arial', 10, 'bold'), bd=0, highlightthickness=0)
+btn_limpiar = tk.Button(ventana, text="Limpiar campos", command=limpiar_campos,
+                        bg="gray", fg="white", width=13, font=('Arial', 10, 'bold'), bd=0, highlightthickness=0)
 
-# Botones con estilo uniforme y separados, dentro del frame
-btn_agregar = tk.Button(ventana, text="Agregar", command=agregar_videojuego, bg="green", fg="white").place(x=130, y=230)
-btn_actualizar = tk.Button(ventana, text="Actualizar", command=actualizar_videojuego, bg="blue", fg="white").place(x=260, y=230)
-btn_eliminar = tk.Button(ventana, text="Eliminar", command=eliminar_videojuego, bg="red", fg="white").place(x=400, y=230)
-btn_limpiar = tk.Button(ventana, text="Limpiar campos", command=limpiar_campos, bg="gray", fg="white").place(x=540, y=230)
-
-for btn in [btn_agregar, btn_actualizar, btn_eliminar, btn_limpiar]:
-    btn.pack(side=tk.LEFT, padx=15)
+btn_agregar.place(x=130, y=230)
+btn_actualizar.place(x=270, y=230)
+btn_eliminar.place(x=410, y=230)
+btn_limpiar.place(x=550, y=230)
 
 # Listbox y scrollbar
 listbox = tk.Listbox(ventana, width=80, height=10)
