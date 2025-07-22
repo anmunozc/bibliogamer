@@ -3,7 +3,7 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 import mysql.connector
 
-# Conexión 
+# Conexión con la base de datos MySQL
 def conectar_bd():
     try:
         conexion = mysql.connector.connect(
@@ -17,8 +17,13 @@ def conectar_bd():
         messagebox.showerror("Error", "No se pudo conectar. Inténtelo más tarde.")
         return None
 
-# Global para mapear fila visible con ID real
+#Variable global para guardar el mapeo entre el indice de la lista y el ID real de la bd en MySQL
 ids_videojuegos = []
+
+"""
+Consulta los juegos almacenados, limpia la lista en la interfaz y la actualiza con los registros en orden ascendente. 
+Tambien guarda los IDs reales para operaciones posteriores.(edit, delete, update)
+"""
 
 def mostrar_videojuegos():
     global ids_videojuegos
@@ -42,12 +47,18 @@ def mostrar_videojuegos():
     finally:
         conexion.close()
 
+"""
+Limpia los campos de entrada para permitir nuevos datos.
+"""
 def limpiar_campos():
     titulo_entry.delete(0, tk.END)
     genero_entry.delete(0, tk.END)
     clasificacion_entry.delete(0, tk.END)
     plataforma_entry.delete(0, tk.END)
 
+"""
+Cuando el usuario selecciona un juego de la lista, carga sus datos en los campos para permitir su actualizacion.
+"""
 def cargar_campos(event):
     seleccionado = listbox.curselection()
     if not seleccionado:
@@ -75,6 +86,10 @@ def cargar_campos(event):
     finally:
         conexion.close()
 
+"""
+Obtiene los datos de los campos de entrada y crea un nuevo juego en la base de datos.
+Actualiza la lista una vez insertado.
+"""
 def agregar_videojuego():
     titulo = titulo_entry.get()
     genero = genero_entry.get()
@@ -101,6 +116,9 @@ def agregar_videojuego():
     finally:
         conexion.close()
 
+"""
+Elimina el juego seleccionado de la base de datos y actualiza la lista.
+"""
 def eliminar_videojuego():
     seleccionado = listbox.curselection()
     if not seleccionado:
@@ -129,6 +147,10 @@ def eliminar_videojuego():
     finally:
         conexion.close()
 
+"""
+Actualiza la informacion de un juego seleccionado usando los datos de los campos
+Refresca la lista para mostrar los cambios.
+"""
 def actualizar_videojuego():
     seleccionado = listbox.curselection()
     if not seleccionado:
